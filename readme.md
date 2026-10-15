@@ -41,6 +41,17 @@ print("After removing duplicates:", wine.shape)
 average_alcohol = wine.groupby("quality")["alcohol"].mean()
 print(average_alcohol)
 
+# Plotting the comparative analysis
+ax = alcohol_by_type.plot(kind="bar", figsize=(8, 5))
+plt.title("Average Alcohol Content by Quality and Wine Type")
+plt.xlabel("Quality Rating")
+plt.ylabel("Average Alcohol (%)")
+plt.legend(title="Wine Type")
+plt.tight_layout()
+plt.savefig("alcohol_vs_quality_by_type.png")
+plt.show()
+
+
 # comparing average alcohol content between Red and White wines
 alcohol_by_type = wine.groupby(["quality", "wine_type"])["alcohol"].mean().unstack()
 
