@@ -4,10 +4,13 @@
 ``` python
 ## Wine Quality: Data Wrangling Final Project
 # winequality-red.csv and winequality-white.csv
+## Overview
+## This project analyzes datasets containing physicochemical properties and quality ratings for red and white variants of the Portuguese *Vinho Verde* wine. The goal is to clean and merge the datasets to explore how key features—specifically alcohol content—relate to wine quality across different wine types.
+
+## The analysis begins by loading separate CSV files for red and white wines, labeling each dataset with its respective type, and combining them into a single pandas DataFrame.
 
 import pandas as pd
 import matplotlib.pyplot as plt
-
 
 red = pd.read_csv("winequality-red.csv", sep=";")
 white = pd.read_csv("winequality-white.csv", sep=";")
@@ -28,7 +31,7 @@ print("Combined:", wine.shape)
 wine.columns = wine.columns.str.replace("red", "white")
 print(list(wine.columns))
 
-
+# duplicate
 print("Duplicate rows:", wine.duplicated().sum())
 # Removing
 wine = wine.drop_duplicates()
@@ -37,6 +40,9 @@ print("After removing duplicates:", wine.shape)
 # grouping wines by quality score, and finding the average alcohol in each group
 average_alcohol = wine.groupby("quality")["alcohol"].mean()
 print(average_alcohol)
+
+# comparing average alcohol content between Red and White wines
+alcohol_by_type = wine.groupby(["quality", "wine_type"])["alcohol"].mean().unstack()
 
 # bar chart
 average_alcohol.plot(kind="bar")
